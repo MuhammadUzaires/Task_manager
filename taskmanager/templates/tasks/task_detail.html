@@ -1,0 +1,46 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h2>{{ task.title }}</h2>
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <strong>Description:</strong>
+            <p>{{ task.description }}</p>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <strong>Priority:</strong>
+                <span class="badge priority-{{ task.priority }}">
+                    {{ task.get_priority_display }}
+                </span>
+            </div>
+            <div class="col-md-4">
+                <strong>Category:</strong>
+                {% if task.category %}
+                    <span class="badge bg-secondary">{{ task.category.name }}</span>
+                {% else %}
+                    <span>None</span>
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <strong>Status:</strong>
+                {% if task.completed %}
+                    <span class="badge bg-success">Completed</span>
+                {% else %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="mb-3">
+            <strong>Created:</strong> {{ task.created|date:"M d, Y H:i" }}
+        </div>
+    </div>
+    <div class="card-footer">
+        <a href="{% url 'task-update' task.pk %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'task-list' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+{% endblock %}
